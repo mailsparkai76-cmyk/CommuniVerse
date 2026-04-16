@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CommuniVerse | Feed</title>
+  <link rel="shortcut icon" href="images/icon.png" type="image/x-icon">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#8b5cf6">
+  <link rel="apple-touch-icon" href="images/icon.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Ambient Background -->
+  <div class="bokeh-bg">
+    <div class="bokeh-item sphere-red"></div>
+    <div class="bokeh-item sphere-blue"></div>
+    <div class="bokeh-item sphere-purple"></div>
+  </div>
+
+  <div class="app-container">
+    <div class="header" style="background: rgba(255,255,255,0.2); backdrop-filter: blur(20px);">
+      <h2 class="gradient-text" style="font-family: 'Outfit', sans-serif; font-style: italic; font-weight: 700;">CommuniVerse</h2>
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <i class="fa-solid fa-heart action-btn" style="font-size: 22px;"></i>
+        <i class="fa-brands fa-facebook-messenger action-btn" style="font-size: 22px;" onclick="window.location.href='home.html'"></i>
+      </div>
+    </div>
+
+    <!-- Desktop Layout Wrapper -->
+    <div class="desktop-main">
+      <div class="feed-column">
+        <!-- Stories Bar -->
+        <div class="stories-container" id="storiesBar">
+          <div class="story-bubble" id="addStoryBtn">
+            <div class="story-avatar">
+               <img src="images/icon.png" class="avatar avatar-md" id="myStoryAvatar">
+            </div>
+            <div class="add-story-icon"><i class="fa-solid fa-plus"></i></div>
+            <span class="story-author">Your Story</span>
+          </div>
+          <!-- Other stories load here -->
+        </div>
+
+        <div id="feedContainer" style="flex: 1;">
+          <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+            <span class="loader"></span><p class="mt-20">Loading your feed...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desktop Sidebar -->
+      <div class="sidebar-column hidden" id="desktopSidebar">
+        <div class="sidebar-panel">
+          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+            <img src="" id="sidebarMyAvatar" class="avatar avatar-md">
+            <div>
+              <div id="sidebarMyName" style="font-weight: 600;">Loading...</div>
+              <div id="sidebarMyUsername" style="font-size: 13px; color: var(--text-secondary);">@username</div>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 16px;">
+            <span style="font-weight: 600; color: var(--text-secondary);">Suggested for you</span>
+            <span style="font-weight: 600; cursor: pointer;">See All</span>
+          </div>
+          <div id="suggestedUsers" style="display: flex; flex-direction: column; gap: 16px;">
+            <!-- Suggested users logic -->
+          </div>
+        </div>
+        <div style="font-size: 12px; color: var(--text-secondary); opacity: 0.6; padding: 0 10px;">
+          About • Help • Press • API • Jobs • Privacy • Terms • Locations • Language • Meta Verified
+          <br><br>
+          © 2026 COMMUNIVERSE FROM TEAM VANI
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+      <div class="nav-item active" onclick="window.location.href='feed.html'"><i class="fa-solid fa-house"></i></div>
+      <div class="nav-item" onclick="window.location.href='search.html'"><i class="fa-solid fa-magnifying-glass"></i></div>
+      <div class="nav-item" onclick="window.location.href='create-post.html'"><i class="fa-solid fa-square-plus"></i></div>
+      <div class="nav-item" onclick="window.location.href='home.html'"><i class="fa-brands fa-facebook-messenger"></i></div>
+      <div class="nav-item" onclick="window.location.href='settings.html'"><i class="fa-solid fa-user"></i></div>
+    </div>
+  </div>
+
+  <!-- Fullscreen Story Viewer -->
+  <div class="story-viewer" id="storyViewer">
+    <div class="story-progress-container" id="storyProgressContainer"></div>
+    <div class="story-header">
+      <img src="" class="avatar avatar-sm" id="storyViewerAvatar">
+      <div style="color: white; font-weight: 600; font-size: 14px; text-shadow: 0 1px 3px rgba(0,0,0,0.8);" id="storyViewerName">Name</div>
+      <div style="color: rgba(255,255,255,0.7); font-size: 12px; margin-left: 8px; text-shadow: 0 1px 3px rgba(0,0,0,0.8);" id="storyViewerTime">2h</div>
+      <i class="fa-solid fa-xmark story-close" id="closeStoryBtn"></i>
+    </div>
+    <div class="story-content">
+      <img src="" class="story-media hidden" id="storyImgView">
+      <video src="" class="story-media hidden" id="storyVidView" playsinline autoplay></video>
+      <div class="story-nav-left" id="storyPrevBtn"></div>
+      <div class="story-nav-right" id="storyNextBtn"></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/feed.js"></script>
+  <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('firebase-messaging-sw.js').catch(err => {
+        console.error("SW Registration failed:", err);
+    });
+    });
+  }
+  </script>
+</body>
+</html>
