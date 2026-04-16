@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CommuniVerse | Create Post</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#8b5cf6">
+  <link rel="apple-touch-icon" href="images/icon.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .upload-area {
+      border: 2px dashed var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 40px 20px;
+      text-align: center;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: var(--transition);
+      margin-bottom: 20px;
+      background: var(--glass-bg);
+    }
+    .upload-area:hover { border-color: var(--primary-color); color: var(--text-primary); }
+    .upload-area i { font-size: 40px; margin-bottom: 12px; color: var(--primary-color); }
+    
+    .preview-container { display: none; margin-bottom: 20px; position: relative; }
+    .preview-media { width: 100%; max-height: 400px; object-fit: contain; border-radius: var(--radius-lg); border: 1px solid var(--glass-border); }
+    .btn-remove-media { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; }
+    
+    .filters-container { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 20px; padding-bottom: 10px; }
+    .filters-container::-webkit-scrollbar { height: 4px; }
+    .filter-btn { padding: 6px 12px; border-radius: 12px; border: 1px solid var(--glass-border); background: var(--glass-bg); color: var(--text-primary); cursor: pointer; white-space: nowrap; }
+    .filter-btn.active { background: var(--primary-color); border-color: var(--primary-color); }
+    
+    .post-options { display: flex; gap: 10px; margin-bottom: 20px; }
+    .type-btn { flex: 1; padding: 12px; border-radius: var(--radius-md); background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-primary); cursor: pointer; text-align: center; font-weight: 500;}
+    .type-btn.active { background: var(--primary-color); border-color: var(--primary-color); }
+  </style>
+</head>
+<body>
+  <div class="app-container" style="padding: 20px; padding-bottom: 80px; display: block; overflow-y: auto;">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+      <h2 class="gradient-text">New Post</h2>
+      <button class="btn-icon" onclick="window.history.back()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="post-options">
+      <div class="type-btn active" id="typeFeed">Feed Post</div>
+      <div class="type-btn" id="typeStory">24h Story</div>
+    </div>
+
+    <input type="file" id="mediaInput" accept="image/*,video/*" hidden>
+    <div class="upload-area" id="uploadArea">
+      <i class="fa-solid fa-cloud-arrow-up"></i>
+      <h3>Tap to select Media</h3>
+      <p>Photos or Videos</p>
+    </div>
+
+    <div class="preview-container" id="previewContainer">
+      <img src="" id="imgPreview" class="preview-media hidden">
+      <video src="" id="vidPreview" class="preview-media hidden" controls playsinline></video>
+      <button class="btn-remove-media" id="removeMediaBtn"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="input-group" id="filtersGroup" style="display: none;">
+      <label>Apply Basic Filter</label>
+      <div class="filters-container">
+        <div class="filter-btn active" data-filter="none">Normal</div>
+        <div class="filter-btn" data-filter="grayscale(100%)">B&W</div>
+        <div class="filter-btn" data-filter="sepia(100%)">Sepia</div>
+        <div class="filter-btn" data-filter="contrast(150%)">Contrast</div>
+        <div class="filter-btn" data-filter="hue-rotate(90deg)">Alien</div>
+      </div>
+    </div>
+
+    <div class="input-group" id="captionGroup">
+      <label>Caption</label>
+      <textarea id="captionInput" class="input-glass" rows="4" placeholder="Write a caption..."></textarea>
+    </div>
+
+    <button class="btn-primary" id="publishBtn">Publish</button>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+      <div class="nav-item" onclick="window.location.href='feed.html'"><i class="fa-solid fa-house"></i></div>
+      <div class="nav-item" onclick="window.location.href='search.html'"><i class="fa-solid fa-magnifying-glass"></i></div>
+      <div class="nav-item active" onclick="window.location.href='create-post.html'"><i class="fa-solid fa-square-plus"></i></div>
+      <div class="nav-item" onclick="window.location.href='home.html'"><i class="fa-brands fa-facebook-messenger"></i></div>
+      <div class="nav-item" onclick="window.location.href='settings.html'"><i class="fa-solid fa-user"></i></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/create-post.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('firebase-messaging-sw.js').catch(console.error);
+      });
+    }
+  </script>
+</body>
+</html>

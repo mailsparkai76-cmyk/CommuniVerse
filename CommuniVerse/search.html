@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CommuniVerse | Discover</title>
+  <link rel="shortcut icon" href="images/icon.png" type="image/x-icon">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#8b5cf6">
+  <link rel="apple-touch-icon" href="images/icon.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .search-wrapper {
+      padding: 24px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.4);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 12px 20px;
+      gap: 12px;
+      transition: var(--transition);
+    }
+    .search-bar:focus-within {
+      background: rgba(255, 255, 255, 0.6);
+      border-color: var(--primary-color);
+      box-shadow: 0 8px 32px rgba(139, 92, 246, 0.2);
+    }
+    .search-bar input {
+      background: transparent;
+      border: none;
+      outline: none;
+      width: 100%;
+      color: var(--text-primary);
+      font-size: 16px;
+    }
+
+    #usersContainer {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 24px;
+    }
+
+    @media (min-width: 768px) {
+      #usersContainer {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      }
+    }
+
+    .user-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .user-card:hover {
+      transform: translateY(-4px);
+      background: var(--glass-hover);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .user-card-info { flex: 1; min-width: 0; }
+    .user-card-name { font-weight: 700; font-size: 16px; color: var(--text-primary); margin-bottom: 2px; }
+    .user-card-username { font-size: 13px; color: var(--text-secondary); opacity: 0.8; }
+
+    .follow-btn {
+      padding: 10px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+    }
+    .follow-btn.primary {
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      color: white;
+    }
+    .follow-btn.secondary {
+      background: rgba(0,0,0,0.05);
+      color: var(--text-primary);
+      border: 1px solid var(--glass-border);
+    }
+    .follow-btn:hover { transform: scale(1.05); }
+  </style>
+</head>
+<body>
+  <!-- Ambient Background -->
+  <div class="bokeh-bg">
+    <div class="bokeh-item sphere-red"></div>
+    <div class="bokeh-item sphere-blue"></div>
+    <div class="bokeh-item sphere-purple"></div>
+  </div>
+
+  <div class="app-container">
+    <div class="header" style="background: rgba(255,255,255,0.2); backdrop-filter: blur(20px);">
+      <h2 class="gradient-text" style="font-style: italic; font-weight: 700;">Discover</h2>
+    </div>
+
+    <div class="search-wrapper">
+      <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass" style="color: var(--text-secondary);"></i>
+        <input type="text" id="searchInput" placeholder="Search the universe for users...">
+      </div>
+    </div>
+
+    <div id="usersContainer">
+      <div style="grid-column: 1/-1; text-align: center; padding: 60px; color: var(--text-secondary);">
+        <span class="loader"></span><p class="mt-20">Scanning CommuniVerse...</p>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+      <div class="nav-item" onclick="window.location.href='feed.html'"><i class="fa-solid fa-house"></i></div>
+      <div class="nav-item active" onclick="window.location.href='search.html'"><i class="fa-solid fa-magnifying-glass"></i></div>
+      <div class="nav-item" onclick="window.location.href='create-post.html'"><i class="fa-solid fa-square-plus"></i></div>
+      <div class="nav-item" onclick="window.location.href='home.html'"><i class="fa-brands fa-facebook-messenger"></i></div>
+      <div class="nav-item" onclick="window.location.href='settings.html'"><i class="fa-solid fa-user"></i></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/search.js"></script>
+</body>
+</html>

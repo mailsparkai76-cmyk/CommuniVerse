@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CommuniVerse | Call</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#8b5cf6">
+  <link rel="apple-touch-icon" href="images/icon.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { background: #000; color: white; }
+    .call-container {
+      width: 100vw; height: 100vh; height: 100dvh; display: flex; flex-direction: column; position: relative;
+      background: radial-gradient(circle at center, #2e1065 0%, #000 100%);
+    }
+    .video-grid {
+      flex: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; padding: 20px;
+      align-items: center; justify-items: center;
+    }
+    video { width: 100%; border-radius: 24px; object-fit: cover; background: #111; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: transform 0.3s; }
+    video.active-speaker { border: 3px solid var(--primary-color); transform: scale(1.02); }
+    
+    .call-controls {
+      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 15px; background: rgba(255, 255, 255, 0.1);
+      padding: 20px; border-radius: 50px; backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1); z-index: 100;
+    }
+    .control-btn {
+      width: 60px; height: 60px; border-radius: 50%; border: none; font-size: 24px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; color: white; background: rgba(255,255,255,0.1);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .control-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-5px); }
+    .control-btn.active { background: white; color: black; }
+    .control-btn.danger { background: #ef4444; box-shadow: 0 0 20px rgba(239, 68, 68, 0.5); }
+    
+    .local-video-container {
+      position: absolute; top: 40px; right: 20px; width: 120px; aspect-ratio: 9/16;
+      border-radius: 20px; overflow: hidden; border: 2px solid var(--primary-color); z-index: 10;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    }
+    .local-video-container video { height: 100%; border-radius: 0; }
+    
+    .call-info {
+      position: absolute; top: 40px; left: 20px; display: flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,0.1); padding: 12px 20px; border-radius: 30px; backdrop-filter: blur(10px);
+    }
+    .avatar-anim { width: 40px; height: 40px; border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(139, 92, 246, 0); } 100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); } }
+  </style>
+</head>
+<body>
+  <div class="call-container">
+    <div class="call-info">
+      <div class="avatar-anim" style="background: var(--primary-color)"></div>
+      <div id="callStatus">Connecting...</div>
+    </div>
+    
+    <div class="video-grid" id="remoteVideos">
+      <!-- Remote videos append here -->
+    </div>
+
+    <div class="local-video-container">
+      <video id="localVideo" autoplay muted playsinline></video>
+    </div>
+
+    <div class="call-controls">
+      <button class="control-btn" id="micBtn"><i class="fa-solid fa-microphone"></i></button>
+      <button class="control-btn" id="camBtn"><i class="fa-solid fa-video"></i></button>
+      <button class="control-btn" id="blurBtn" title="Blur Background"><i class="fa-solid fa-wand-magic-sparkles"></i></button>
+      <button class="control-btn danger" id="endBtn"><i class="fa-solid fa-phone-slash"></i></button>
+    </div>
+  </div>
+
+  <script type="module" src="js/call.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('firebase-messaging-sw.js').catch(console.error);
+      });
+    }
+  </script>
+</body>
+</html>
